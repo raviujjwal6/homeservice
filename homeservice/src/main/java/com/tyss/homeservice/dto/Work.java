@@ -3,6 +3,8 @@ package com.tyss.homeservice.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +24,7 @@ public class Work {
 	private int wid;
 	private Date StartDate;
 	private Date endDate;
+	private String type;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;

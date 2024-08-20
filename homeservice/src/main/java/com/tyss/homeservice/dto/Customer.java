@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,6 +47,7 @@ public class Customer {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
 	@OneToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Work>works;
 	
 	
