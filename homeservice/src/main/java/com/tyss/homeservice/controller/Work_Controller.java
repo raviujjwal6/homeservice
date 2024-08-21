@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,4 +35,21 @@ public class Work_Controller {
 	public ResponseEntity<ResponseStructure<Work>> updateWork(@RequestBody Work work) {
 		return service.updateWork(work);
 	}
+	@GetMapping("fetchall/work")
+	public ResponseEntity<ResponseStructure<List<Work>>> fetchAllWork() {
+		return service.fetchAllWork();
+	}
+	@GetMapping("fetchall/ongoing/work")
+	public ResponseEntity<ResponseStructure<List<Work>>> fetchAllOnGoingWork() {
+		return service.fetchAllOnGoingWork();
+	}
+	@GetMapping("fetchall/completed/work")
+	public ResponseEntity<ResponseStructure<List<Work>>> fetchAllCompletedWorkk() {
+		return service.fetchAllCompletedWork();
+	}
+	@DeleteMapping("delete/work/{id}")
+	public ResponseEntity<ResponseStructure<Work>> deleteWorkById(@PathVariable int id) {
+		return service.deleteWorkById(id);
+	}
+	
 }

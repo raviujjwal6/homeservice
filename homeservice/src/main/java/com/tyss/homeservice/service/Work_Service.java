@@ -27,13 +27,13 @@ public class Work_Service {
 	public ResponseEntity<ResponseStructure<Work>> saveWork(int cid, Work work) {
 		Optional<Customer> customer = customer_Dao.findCustomerById(cid);
 		if (customer.isPresent()) {
-
 			Customer db = customer.get();
 			work.setCustomer(db);
 			Work dbwork = dao.saveWork(work);
 			List<Work> list = new ArrayList<Work>();
 			list.add(dbwork);
 			db.setWorks(list);
+			
 			customer_Dao.updateCustomer(db);
 			structure.setData(work);
 			structure.setMsg("work saved");
@@ -67,5 +67,61 @@ public class Work_Service {
 		}else
 			throw new IdNotFound("Work not present on work Id");
 	}
+	
+	public ResponseEntity<ResponseStructure<List<Work>>> fetchAllWork() {
+		List<Work>list=dao.fetchAllWork();
+		if (list != null) {
+			ResponseStructure<List<Work>> structure = new ResponseStructure<List<Work>>();
+			structure.setData(list);
+			structure.setMsg("All work fetched");
+			structure.setStatusCode(HttpStatus.FOUND.value());
+			return new ResponseEntity<ResponseStructure<List<Work>>>(structure, HttpStatus.FOUND);
+
+		} else
+			throw new IdNotFound("No Work is available now");
+		
+	}
+	public ResponseEntity<ResponseStructure<List<Work>>> fetchAllOnGoingWork() {
+		List<Work>list=dao.fetchAllOnGoingWork();
+		if (list != null) {
+			ResponseStructure<List<Work>> structure = new ResponseStructure<List<Work>>();
+			structure.setData(list);
+			structure.setMsg("All work fetched");
+			structure.setStatusCode(HttpStatus.FOUND.value());
+			return new ResponseEntity<ResponseStructure<List<Work>>>(structure, HttpStatus.FOUND);
+
+		} else
+			throw new IdNotFound("No Work is available now");
+		
+	}
+	public ResponseEntity<ResponseStructure<List<Work>>> fetchAllCompletedWork() {
+		List<Work>list=dao.fetchAllCompletedWork();
+		if (list != null) {
+			ResponseStructure<List<Work>> structure = new ResponseStructure<List<Work>>();
+			structure.setData(list);
+			structure.setMsg("All work fetched");
+			structure.setStatusCode(HttpStatus.FOUND.value());
+			return new ResponseEntity<ResponseStructure<List<Work>>>(structure, HttpStatus.FOUND);
+
+		} else
+			throw new IdNotFound("No Work is completed now");
+		
+	}
+	public ResponseEntity<ResponseStructure<Work>> deleteWorkById(int id) {
+		Work work = dao.findWorkById(id);
+		if(work != null) {
+			work.setCustomer(null);
+			dao.deleteWorkById(id);
+			ResponseStructure<Work> structure = new ResponseStructure<Work>();
+			structure.setData(work);
+			structure.setMsg("Data Deleted");
+			structure.setStatusCode(HttpStatus.OK.value());
+			return new ResponseEntity<ResponseStructure<Work>>(structure, HttpStatus.OK);
+
+		} else
+			throw new IdNotFound("No Work is found");
+		
+		}
+	
 
 }
