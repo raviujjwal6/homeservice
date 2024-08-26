@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.tyss.homeservice.dao.Customer_Dao;
+import com.tyss.homeservice.dto.Address;
 import com.tyss.homeservice.dto.Customer;
 import com.tyss.homeservice.exception.IdNotFound;
 import com.tyss.homeservice.exception.Login_Exception;
@@ -40,11 +41,23 @@ public class Customer_Service {
 			throw new IdNotFound();
 	}
 	public ResponseEntity<ResponseStructure<Customer>> updateCustomer(Customer customer) {
-		Customer customer2=customer_Dao.updateCustomer(customer);
-		structure.setData(customer2);
-		structure.setMsg("data modified");
-		structure.setStatusCode(HttpStatus.OK.value());
-		return new ResponseEntity<ResponseStructure<Customer>>(structure,HttpStatus.OK);
+		Optional<Customer> customerdb=customer_Dao.findCustomerById(customer.getCid());
+		Address address=customerdb.get().getAddress();
+		if(customer.getAddress()==null) {
+			customer.setAddress(address);
+			Customer customer2=customer_Dao.updateCustomer(customer);
+			structure.setData(customer2);
+			structure.setMsg("data modified");
+			structure.setStatusCode(HttpStatus.OK.value());
+			return new ResponseEntity<ResponseStructure<Customer>>(structure,HttpStatus.OK);
+		}else {
+			Customer customer2=customer_Dao.updateCustomer(customer);
+			structure.setData(customer2);
+			structure.setMsg("data modified");
+			structure.setStatusCode(HttpStatus.OK.value());
+			return new ResponseEntity<ResponseStructure<Customer>>(structure,HttpStatus.OK);
+		}
+		
 	}
 	
 	public ResponseEntity<ResponseStructure<Customer>> deleteCustomerById(int id) {

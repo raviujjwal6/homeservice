@@ -12,7 +12,7 @@ public class ServiceCost {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int sid;
-	private String mode;
+	private  String mode;
 	private double totalAmount;
 	private int days;
 	

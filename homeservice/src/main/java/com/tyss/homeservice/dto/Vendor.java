@@ -2,6 +2,8 @@ package com.tyss.homeservice.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +31,7 @@ public class Vendor {
 	private Address address;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Work>works
 	/*
 	 * one vendors can have many servicecost
